@@ -83,4 +83,4 @@ window.onload = async () => {
   getCartItems.innerHTML = getSavedCartItems('cartItems');
 };
 
-/* commit test */
+/* commit */
