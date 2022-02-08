@@ -75,11 +75,12 @@ getButtonClear.addEventListener('click', () => {
   getLi.forEach((element) => element.remove());
 });
 
+const getCartItems = document.querySelector('.cart__items');
+
 window.onload = async () => {
   const url = await fetchProducts('computador');
   createProduct(url.results);
   addCartItem();
-  const getCartItems = document.querySelector('.cart__items');
   getCartItems.innerHTML = getSavedCartItems('cartItems');
 };
 
