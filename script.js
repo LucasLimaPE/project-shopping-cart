@@ -48,7 +48,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   const item = document.querySelector('.cart__items');
   item.appendChild(li);
-  saveCartItem(item.innerHTML);
+  saveCartItems(item.innerHTML);
 }
 
 const addCartItem = () => {
@@ -72,7 +72,7 @@ window.onload = async () => {
   const url = await fetchProducts('computador');
   createProduct(url.results);
   addCartItem();
-  const getCartItems = document.querySelector('.cart__Items');
+  const getCartItems = document.querySelector('.cart__items');
   getCartItems.innerHTML = getSavedCartItems('cartItems');
 };
 
