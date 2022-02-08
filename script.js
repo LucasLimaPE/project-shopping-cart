@@ -68,6 +68,13 @@ const addCartItem = () => {
   });
 };
 
+const getButtonClear = document.querySelector('.empty-cart');
+
+getButtonClear.addEventListener('click', () => {
+  const getLi = document.querySelectorAll('li');
+  getLi.forEach((element) => element.remove());
+});
+
 window.onload = async () => {
   const url = await fetchProducts('computador');
   createProduct(url.results);
