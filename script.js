@@ -82,6 +82,8 @@ window.onload = async () => {
   createProduct(url.results);
   addCartItem();
   getCartItems.innerHTML = getSavedCartItems('cartItems');
+  const getLi = document.querySelectorAll('li');
+  getLi.forEach((element) => element.addEventListener('click', cartItemClickListener));
 };
 
 /* commit */
