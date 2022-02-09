@@ -1,3 +1,7 @@
+/* 
+Recebi ajuda do colega Guilherme Azevedo para desenvolver este projeto.
+*/
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
