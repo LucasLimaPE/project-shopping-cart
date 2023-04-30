@@ -2,6 +2,8 @@
 Recebi ajuda do colega Guilherme Azevedo para desenvolver este projeto.
 */
 
+const cartItems = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -50,7 +52,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  const item = document.querySelector('.cart__items');
+  const item = cartItems;
   item.appendChild(li);
   saveCartItems(item.innerHTML);
 }
@@ -79,10 +81,23 @@ getButtonClear.addEventListener('click', () => {
   getLi.forEach((element) => element.remove());
 });
 
-const getCartItems = document.querySelector('.cart__items');
+const getCartItems = cartItems;
+
+const loadingFunc = async () => {
+  const items = document.querySelector('.items');
+  const element = cartItems;
+  const loadingOne = createCustomElement('div', 'loading', 'carregando...');
+  const loadingTwo = createCustomElement('div', 'loading', 'carregando...');
+  items.appendChild(loadingOne);
+  element.appendChild(loadingTwo);
+  const result = await fetchProducts('computador');
+  loadingOne.style.display = 'none';
+  loadingTwo.style.display = 'none';
+  return result;
+};
 
 window.onload = async () => {
-  const url = await fetchProducts('computador');
+  const url = await loadingFunc();
   createProduct(url.results);
   addCartItem();
   getCartItems.innerHTML = getSavedCartItems('cartItems');
