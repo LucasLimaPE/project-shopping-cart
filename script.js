@@ -4,6 +4,18 @@ Recebi ajuda do colega Guilherme Azevedo para desenvolver este projeto.
 
 const cartItems = document.querySelector('.cart__items');
 
+const sumCartItems = () => {
+  const items = getSavedCartItems();
+  const element = document.querySelector('.total');
+  if (items) {
+    const replaced = items.map((item) => item.split('$')[1]);
+    const sum = replaced.reduce((acc, curr) => acc + Number(curr), 0).toFixed(2);
+    element.innerText = `Subtotal: R$ ${sum}`;
+    return;
+  }
+  element.innerText = 'Subtotal: R$ 00,00';
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -48,6 +60,7 @@ function cartItemClickListener(event) {
   const filtered = items.filter((item) => item !== event.target.innerHTML);
   localStorage.removeItem('cartItems');
   saveCartItems(filtered);
+  sumCartItems();
   event.target.remove();
 }
 
@@ -59,6 +72,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   const item = cartItems;
   item.appendChild(li);
   saveCartItems(li.innerHTML);
+  sumCartItems();
 }
 
 const addCartItem = () => {
@@ -84,6 +98,7 @@ getButtonClear.addEventListener('click', () => {
   const getLi = document.querySelectorAll('li');
   getLi.forEach((element) => element.remove());
   localStorage.removeItem('cartItems');
+  sumCartItems();
 });
 
 const loadingFunc = async () => {
@@ -107,7 +122,8 @@ const displaySavedCartItems = () => {
       itemToDisplay.innerHTML = item;
       cartItems.appendChild(itemToDisplay);
     });
-}
+  }
+  sumCartItems();
 };
 
 window.onload = async () => {
