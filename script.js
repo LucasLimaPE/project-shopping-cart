@@ -44,7 +44,11 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  return event.target.remove();
+  const items = getSavedCartItems();
+  const filtered = items.filter((item) => item !== event.target.innerHTML);
+  localStorage.removeItem('cartItems');
+  saveCartItems(filtered);
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -54,7 +58,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   const item = cartItems;
   item.appendChild(li);
-  saveCartItems(item.innerHTML);
+  saveCartItems(li.innerHTML);
 }
 
 const addCartItem = () => {
@@ -79,9 +83,8 @@ const getButtonClear = document.querySelector('.empty-cart');
 getButtonClear.addEventListener('click', () => {
   const getLi = document.querySelectorAll('li');
   getLi.forEach((element) => element.remove());
+  localStorage.removeItem('cartItems');
 });
-
-const getCartItems = cartItems;
 
 const loadingFunc = async () => {
   const items = document.querySelector('.items');
@@ -91,16 +94,27 @@ const loadingFunc = async () => {
   items.appendChild(loadingOne);
   element.appendChild(loadingTwo);
   const result = await fetchProducts('computador');
-  loadingOne.style.display = 'none';
-  loadingTwo.style.display = 'none';
+  loadingOne.remove();
+  loadingTwo.remove();
   return result;
+};
+
+const displaySavedCartItems = () => {
+  const items = getSavedCartItems();
+  if (items) {
+    items.forEach((item) => {
+      const itemToDisplay = document.createElement('li');
+      itemToDisplay.innerHTML = item;
+      cartItems.appendChild(itemToDisplay);
+    });
+}
 };
 
 window.onload = async () => {
   const url = await loadingFunc();
   createProduct(url.results);
   addCartItem();
-  getCartItems.innerHTML = getSavedCartItems('cartItems');
+  displaySavedCartItems();
   const getLi = document.querySelectorAll('li');
   getLi.forEach((element) => element.addEventListener('click', cartItemClickListener));
 };
