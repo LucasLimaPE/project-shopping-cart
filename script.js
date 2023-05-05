@@ -10,10 +10,10 @@ const sumCartItems = () => {
   if (items) {
     const replaced = items.map((item) => item.split('$')[1]);
     const sum = replaced.reduce((acc, curr) => acc + Number(curr), 0).toFixed(2);
-    element.innerText = `R$ ${sum}`;
+    element.innerText = `${sum}`;
     return;
   }
-  element.innerText = 'R$ 00,00';
+  element.innerText = '00.00';
 };
 
 function createProductImageElement(imageSource) {
