@@ -5,7 +5,7 @@ Recebi ajuda do colega Guilherme Azevedo para desenvolver este projeto.
 const cartItems = document.querySelector('.cart__items');
 
 const sumCartItems = () => {
-  const items = getSavedCartItems();
+  const items = JSON.parse(getSavedCartItems());
   const element = document.querySelector('.total-price');
   if (items) {
     const replaced = items.map((item) => item.split('$')[1]);
@@ -14,6 +14,20 @@ const sumCartItems = () => {
     return;
   }
   element.innerText = '0';
+};
+
+const checkToSave = (param) => {
+  const saved = localStorage.getItem('cartItems');
+  if (typeof param === 'object') {
+    return JSON.stringify(param);
+  }
+  if (saved === null) {
+    return JSON.stringify([param]);
+  }
+  const savedArray = JSON.parse(localStorage.getItem('cartItems'));
+  savedArray.push(param);
+
+  return JSON.stringify(savedArray);
 };
 
 function createProductImageElement(imageSource) {
@@ -56,10 +70,10 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const items = getSavedCartItems();
+  const items = JSON.parse(getSavedCartItems());
   const filtered = items.filter((item) => item !== event.target.innerHTML);
   localStorage.removeItem('cartItems');
-  saveCartItems(filtered);
+  saveCartItems(checkToSave(filtered));
   sumCartItems();
   event.target.remove();
 }
@@ -71,7 +85,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   const item = cartItems;
   item.appendChild(li);
-  saveCartItems(li.innerHTML);
+  saveCartItems(checkToSave(li.innerHTML));
   sumCartItems();
 }
 
@@ -115,7 +129,7 @@ const loadingFunc = async () => {
 };
 
 const displaySavedCartItems = () => {
-  const items = getSavedCartItems();
+  const items = JSON.parse(getSavedCartItems());
   if (items) {
     items.forEach((item) => {
       const itemToDisplay = document.createElement('li');
