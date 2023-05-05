@@ -6,14 +6,14 @@ const cartItems = document.querySelector('.cart__items');
 
 const sumCartItems = () => {
   const items = getSavedCartItems();
-  const element = document.querySelector('.total');
+  const element = document.querySelector('.total-price');
   if (items) {
     const replaced = items.map((item) => item.split('$')[1]);
     const sum = replaced.reduce((acc, curr) => acc + Number(curr), 0).toFixed(2);
-    element.innerText = `${sum}`;
+    element.innerText = `R$ ${sum}`;
     return;
   }
-  element.innerText = '00,00';
+  element.innerText = 'R$ 00,00';
 };
 
 function createProductImageElement(imageSource) {
@@ -58,6 +58,7 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   const items = getSavedCartItems();
   const filtered = items.filter((item) => item !== event.target.innerHTML);
+  console.log(filtered);
   localStorage.removeItem('cartItems');
   saveCartItems(filtered);
   sumCartItems();
@@ -104,6 +105,8 @@ getButtonClear.addEventListener('click', () => {
 const loadingFunc = async () => {
   const items = document.querySelector('.items');
   const element = cartItems;
+  const totalPrice = document.querySelector('.total');
+  totalPrice.style.display = 'none';
   const loadingOne = createCustomElement('div', 'loading', 'carregando...');
   const loadingTwo = createCustomElement('div', 'loading', 'carregando...');
   items.appendChild(loadingOne);
@@ -111,6 +114,7 @@ const loadingFunc = async () => {
   const result = await fetchProducts('computador');
   loadingOne.remove();
   loadingTwo.remove();
+  totalPrice.style.display = 'block';
   return result;
 };
 
