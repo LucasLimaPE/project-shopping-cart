@@ -5,7 +5,7 @@
 Este projeto foi criado com o objetivo de testar e aprimorar os conhecimentos em JavaScript, CSS, HTML, Node.js e Jest durante o Módulo de Fundamentos do Desenvolvimento Web na Trybe. Durante sua elaboração, foram praticadas habilidades essenciais, tais como:
 
 * Utilizar um ambiente de execução Node.js;
-* Utilizar TDD (Test Drive Development);
+* Utilizar TDD (Test Driven Development);
 * Fazer requisições à API (Application Programming Interface) do Mercado Livre;
 * Utilizar JavaScript, CSS e HTML para construir páginas web;
 * Utilizar funções assíncronas;
@@ -47,7 +47,7 @@ O projeto consiste em implementar um **carrinho de compras** dinâmico, consumir
   - Ao carregar a página, o estado atual do carrinho de compras deve ser carregado do **LocalStorage**. Para que isso funcione, o carrinho de compras deve ser salvo no **LocalStorage**, ou seja, todas as **adições** e **remoções** devem ser abordadas para que a lista esteja sempre atualizada.
   - Deve-se implementar dentro da pasta `helpers` as funções `saveCartItems` e `getSavedCartItems`, respectivamente, nos arquivos `saveCartItems.js` e `getSavedCartItems.js`.
   - A função `saveCartItems` deve salvar os itens do carrinho de compras no `localStorage`, em uma chave denominada `cartItems`.
-  - A função getSavedCartItems deve recuperar os itens do carrinho de compas do `localStorage` quando a página for carregada.
+  - A função `getSavedCartItems` deve recuperar os itens do carrinho de compas do `localStorage` quando a página for carregada.
 
 5. Some o valor total do carrinho de compras, a cada item que for adicionado ao carrinho de compras deve-se somar seus valores e apresentá-los na página principal do projeto.
   - O elemento que tem como filho o preço total do carrinho deve ter, **obrigatoriamente**, a classe `total-price`.
@@ -72,7 +72,7 @@ O projeto consiste em implementar um **carrinho de compras** dinâmico, consumir
   - Teste se `fetchItem` é uma função.
   - Execute a função `fetchItem` com o argumento do item "MLB1615760527" e teste se a função `fetch` foi chamada.
   - Teste se, ao chamar a função `fetchItem` com o argumento do item "MLB1615760527", a função `fetch` utiliza o endpoint "https://api.mercadolibre.com/items/MLB1615760527".
-  - Teste se o retorno da função `fetchItem` com o argumento do item "MLB1615760527" é uma estrutura de dados igual ao objeto item que já está importado no arquivo.
+  - Teste se o retorno da função `fetchItem` com o argumento do item "MLB1615760527" é uma estrutura de dados igual ao objeto `item` que já está importado no arquivo.
   - Teste se, ao chamar a função `fetchItem` sem argumento, retorna um erro com a mensagem: You must provide an url. Dica: Lembre-se de usar o new Error('mensagem esperada aqui') para comparar com o objeto retornado da API.
 
 10. Desenvolva testes de no mínimo 75% de cobertura total e 100% da função `saveCartItems`, no arquivo `saveCartItems.test.js`, dentro da pasta `tests`.
